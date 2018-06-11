@@ -34,6 +34,16 @@ int main() {
     btn.rise(&switch_mode);
     led1 = !g_echo;
 
+    sai_result_t sp_status  = sp.status();
+    sai_result_t mic_status = mic.status();
+
+    if (sp_status != SAI_RESULT_OK || mic_status != SAI_RESULT_OK) {
+        printf("Speaker SAI line status: %d\r\n", sp_status);
+        printf("Mic SAI line status: %d\r\n", mic_status);
+        
+        error("SAI module failed to initialize properly...\r\n");
+    }
+    
     uint32_t i = 0;
     
     int16_t buffer[COUNT] = {0};
